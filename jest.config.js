@@ -6,6 +6,6 @@ module.exports = {
     './jest.setup.js'
   ],
   "transformIgnorePatterns": [
-    "node_modules/(?!(jest-)?react-native|@react-native|aws-amplify|@aws-amplify)"
+    "node_modules/(?!(jest-)?react-native|@react-native|react-native-gesture-handler|aws-amplify|@aws-amplify|react-redux)"
   ],
 };

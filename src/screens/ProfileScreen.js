@@ -119,6 +119,7 @@ const ProfileScreen = ({ navigation }) => {
         <Image
           source={require('../../assets/profilePic.jpg')}
           style={styles.profileImage}
+          testID="profile-image"
         />
       </View>
       <View style={styles.detailsContainer}>
@@ -128,6 +129,7 @@ const ProfileScreen = ({ navigation }) => {
           value={profile.email}
           onChangeText={(text) => setProfile(prev => ({ ...prev, email: text }))}
           editable={isEditing}
+          testID="email-input"
         />
         <Text style={styles.infoTitle}>Name</Text>
         <TextInput
@@ -135,6 +137,7 @@ const ProfileScreen = ({ navigation }) => {
           value={profile.name}
           onChangeText={(text) => setProfile(prev => ({ ...prev, name: text }))}
           editable={isEditing}
+          testID="name-input"
         />
         <Text style={styles.infoTitle}>City</Text>
         <TextInput
@@ -142,6 +145,7 @@ const ProfileScreen = ({ navigation }) => {
           value={profile.city}
           onChangeText={(text) => setProfile(prev => ({ ...prev, city: text }))}
           editable={isEditing}
+          testID="city-input"
         />
         <Text style={styles.infoTitle}>Pincode</Text>
         <TextInput
@@ -150,6 +154,7 @@ const ProfileScreen = ({ navigation }) => {
           onChangeText={(text) => setProfile(prev => ({ ...prev, pincode: text }))}
           editable={isEditing}
           keyboardType="numeric"
+          testID="pincode-input"
         />
         <Text style={styles.infoTitle}>Country</Text>
         {isEditing ? (
@@ -169,6 +174,7 @@ const ProfileScreen = ({ navigation }) => {
             searchPlaceholder="Search..."
             value={selectedCountry ? selectedCountry.value : null}
             onChange={(item) => setSelectedCountry(item)}
+            testID='country-dropdown'
           />
         ) : (
           <Text style={styles.infoValue}>{profile.country}</Text>
@@ -176,11 +182,15 @@ const ProfileScreen = ({ navigation }) => {
       </View>
       {error ? <Text style={styles.error}>{error}</Text> : null}
       {isEditing ? (
-        <TouchableOpacity style={styles.updateButton} onPress={handleSave}>
+        <TouchableOpacity 
+          style={styles.updateButton} 
+          onPress={handleSave}
+          testID="update-button"
+        >
           <Text style={styles.buttonText}>Update Profile</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.editButton} onPress={handleEditToggle}>
+        <TouchableOpacity style={styles.editButton} onPress={handleEditToggle} testID="edit-button">
           <Text style={styles.buttonText}>Edit Profile</Text>
         </TouchableOpacity>
       )}
