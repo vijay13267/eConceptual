@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { View, TextInput, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { setUserDetails, setUserLoginStatus } from '../redux/actions/authActions';
 
 const { height } = Dimensions.get('window');
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState(); // user email
-  const [password, setPassword] = useState(); // user password
-  const [error, setError] = useState();
+  const [email, setEmail] = useState(''); // Initialize as empty string
+  const [password, setPassword] = useState(''); // Initialize as empty string
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
 
+  const validateEmail = (email) => {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const handleLogin = async () => {
+    if (!email || !password) {
+      setError('Both email and password are required.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    if (email !== 'user@econceptual.com' || password !== 'user-password') {
+      setError('Invalid email or password.');
+      return;
+    }    
+
     try {
       dispatch(setUserLoginStatus(true));
       // update token in store
@@ -27,6 +47,7 @@ const LoginScreen = ({ navigation }) => {
       navigation.navigate('Products');
     } catch (err) {
       console.log('Error', err);
+      setError('Failed to log in. Please try again.');
     }
   };
 
@@ -128,9 +149,10 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginBottom: 12,
+    alignSelf:'center'
   },
   button: {
-    backgroundColor: '#fff', // Button background color
+    backgroundColor: '#244889', // Button background color
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -138,7 +160,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   buttonText: {
-    color: '#244889', // Button text color to match theme
+    color: '#fff', // Button text color to match theme
     fontSize: 16,
     fontWeight: 'bold',
   },

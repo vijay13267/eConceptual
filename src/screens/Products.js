@@ -16,6 +16,28 @@ const Products = ({ navigation }) => {
   const products = useSelector((state)=> state.product.products) //getting products state from redux store
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [loadingMore, setLoadingMore] = useState(false);
+
+  const loadMoreProducts = () => {
+    const nextId = products.length;
+    const additionalData = [
+      { id: (nextId + 1).toString(), name: 'Product 1', description: 'Description of Product 1', price: '10.00', imageUrl: dress1, premiumAccess: false },
+      { id: (nextId + 2).toString(), name: 'Product 2', description: 'Description of Product 2', price: '20.00', imageUrl: dress2, premiumAccess: true },
+      { id: (nextId + 3).toString(), name: 'Product 3', description: 'Description of Product 3', price: '15.00', imageUrl: dress7, premiumAccess: false },
+    ]
+    // Update local state (simulate adding to products list)
+    const updatedProducts = [...products, ...additionalData];
+    
+    // Log the updated products list for debugging
+    console.log('Updated products list:', updatedProducts);
+
+    // Dispatch the updated products list
+    try {
+      dispatch(setProducts(updatedProducts));
+    } catch (error) {
+      console.error('Error dispatching action:', error);
+    }
+  };  
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -86,6 +108,9 @@ const Products = ({ navigation }) => {
         renderItem={renderProduct} //each item is being rendered and passed to component
         keyExtractor={item => item.id}
         contentContainerStyle={styles.cardContainer}
+        onEndReached={loadMoreProducts}
+        onEndReachedThreshold={0.5} // Trigger loading when the user is within 50% of the end
+        ListEmptyComponent={error && <Text style={styles.error}>{error}</Text>}
       />
     </View>
   );
@@ -106,7 +131,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#fff', 
   },
   profileImage: {
     width: 40,
