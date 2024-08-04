@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity, TextInput, Alert, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout, setUserDetails } from '../redux/actions/authActions';
+import { logout, setUserDetails, setUserLoginStatus } from '../redux/actions/authActions';
 import LogoutModal from '../components/LogoutModal'; 
 import { Dropdown } from 'react-native-element-dropdown';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileScreen = ({ navigation }) => {
   const userDetails = useSelector((state) => state.auth.userDetails);
@@ -50,9 +51,22 @@ const ProfileScreen = ({ navigation }) => {
     setIsModalVisible(false);
   };
 
-  const handleLogoutConfirm = () => {
-    navigation.navigate('Login');
-    handleModalClose();
+  const handleLogoutConfirm = async () => {
+    try {
+      // Clear the login status from AsyncStorage
+      await AsyncStorage.removeItem('isLoggedIn');
+      await AsyncStorage.removeItem('userDetails');
+      // Update Redux store to reflect the logout status
+      dispatch(setUserLoginStatus(false));
+  
+      // Navigate to login page or any other screen you want
+      navigation.navigate('Login');
+      handleModalClose();
+    } catch (err) {
+      console.log('Error during logout:', err);
+      // Handle any errors, e.g., show a message to the user
+    }
+    
   };
 
   const handleEditToggle = () => {
@@ -82,6 +96,7 @@ const ProfileScreen = ({ navigation }) => {
       console.log('Updated profile:', updatedProfile);
 
       setIsEditing(false);
+      await AsyncStorage.setItem('userDetails',JSON.stringify(updatedProfile));
       dispatch(setUserDetails(updatedProfile));
       setProfile(updatedProfile);
     } catch (err) {

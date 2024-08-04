@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { setUserDetails, setUserLoginStatus } from '../redux/actions/authActions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { height } = Dimensions.get('window');
 
@@ -43,7 +44,9 @@ const LoginScreen = ({ navigation }) => {
         pincode: '505188',
         country: 'India'
       };
-      dispatch(setUserDetails(data)); //
+      dispatch(setUserDetails(data)); //storing user details in redux store
+      await AsyncStorage.setItem('isLoggedIn', 'true'); //storing login status in async for upcoming sessions
+      await AsyncStorage.setItem('userDetails',JSON.stringify(data));
       navigation.navigate('Products');
     } catch (err) {
       console.log('Error', err);

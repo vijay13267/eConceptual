@@ -7,11 +7,11 @@ import Products from '../screens/Products';
 
 const Stack = createStackNavigator();
 
-const MainNavigator = () => {
+const MainNavigator = (props) => {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Login" 
+        initialRouteName={props.Screen}
         screenOptions={{
           headerStyle: {
             backgroundColor: '#244889', // Theme color for the header

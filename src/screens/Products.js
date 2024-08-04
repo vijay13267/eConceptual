@@ -23,7 +23,7 @@ const Products = ({ navigation }) => {
     const additionalData = [
       { id: (nextId + 1).toString(), name: 'Product 1', description: 'Description of Product 1', price: '10.00', imageUrl: dress1, premiumAccess: false },
       { id: (nextId + 2).toString(), name: 'Product 2', description: 'Description of Product 2', price: '20.00', imageUrl: dress2, premiumAccess: true },
-      { id: (nextId + 3).toString(), name: 'Product 3', description: 'Description of Product 3', price: '15.00', imageUrl: dress7, premiumAccess: false },
+      { id: (nextId + 3).toString(), name: 'Product 3', description: 'Description of Product 3', price: '15.00', imageUrl: dress3, premiumAccess: false },
     ]
     // Update local state (simulate adding to products list)
     const updatedProducts = [...products, ...additionalData];
@@ -46,7 +46,7 @@ const Products = ({ navigation }) => {
         const data = [
           { id: '1', name: 'Product 1', description: 'Description of Product 1', price: '10.00', imageUrl: dress1, premiumAccess: false },
           { id: '2', name: 'Product 2', description: 'Description of Product 2', price: '20.00', imageUrl: dress2, premiumAccess: true },
-          { id: '3', name: 'Product 3', description: 'Description of Product 3', price: '15.00', imageUrl: dress7, premiumAccess: false },
+          { id: '3', name: 'Product 3', description: 'Description of Product 3', price: '15.00', imageUrl: dress3, premiumAccess: false },
           { id: '4', name: 'Product 4', description: 'Description of Product 4', price: '25.00', imageUrl: dress4, premiumAccess: true },
           { id: '5', name: 'Product 5', description: 'Description of Product 5', price: '30.00', imageUrl: dress5, premiumAccess: false },
           { id: '6', name: 'Product 6', description: 'Description of Product 6', price: '40.00', imageUrl: dress6, premiumAccess: true },
